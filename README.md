@@ -187,13 +187,13 @@ git version 2.55.0.windows.3
 Set Username
 
 ```bash
-git config --global user.name "Pavan"
+git config --global user.name "e5405777"
 ```
 
 Set Email
 
 ```bash
-git config --global user.email "pavan@example.com"
+git config --global user.email "ky71bm@gmail.com"
 ```
 
 Verify
