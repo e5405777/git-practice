@@ -196,6 +196,8 @@ Set Email
 git config --global user.email "ky71bm@gmail.com"
 ```
 
+git config --global push.default "simple"
+
 Verify
 
 ```bash
