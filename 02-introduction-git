@@ -1,1 +1,203 @@
 
+# Git Notes
+
+## 1. `git stash`
+
+Use `git stash` when you have **uncommitted changes** in your working directory and you want to temporarily save them without committing.
+
+### Save current changes
+
+```bash
+git stash
+```
+
+* Saves the changes as a backup.
+* Removes the changes from the working directory.
+* The working directory becomes clean.
+
+### View all stashes
+
+```bash
+git stash list
+```
+
+Example:
+
+```text
+stash@{0}: WIP on main: 3a2b1c4 Added login feature
+stash@{1}: WIP on feature: 8f4c2d1 Bug fix
+```
+
+### Apply a stash
+
+```bash
+git stash apply stash@{0}
+```
+
+This restores the changes from the specified stash.
+
+> **Note:** It is recommended that your working directory is clean before applying a stash to avoid merge conflicts.
+
+### Remove all stashes
+
+```bash
+git stash clear
+```
+
+This permanently deletes all saved stashes.
+
+---
+
+# 2. `git cherry-pick`
+
+`git cherry-pick` is used to copy **a specific commit** from one branch to another.
+
+Syntax:
+
+```bash
+git cherry-pick <commit-id>
+```
+
+Example:
+
+```bash
+git cherry-pick 8f4c2d1
+```
+
+Only the changes from commit `8f4c2d1` are copied to the current branch.
+
+> **Note:** Cherry-pick works only with committed changes. It cannot copy uncommitted changes.
+
+---
+
+# 3. Undo Working Directory Changes
+
+To discard changes made to a file in the working directory:
+
+```bash
+git restore <file-name>
+```
+
+Example:
+
+```bash
+git restore file1
+```
+
+This restores the file to the latest committed version.
+
+---
+
+# 4. View Commit History
+
+To view the last two commits:
+
+```bash
+git log --oneline -2
+```
+
+Example:
+
+```text
+8f4c2d1 Fix login bug
+3a2b1c4 Added login page
+```
+
+`HEAD` always points to the latest commit on the current branch.
+
+---
+
+# 5. `git reset`
+
+`git reset` moves the `HEAD` pointer to another commit.
+
+## Soft Reset
+
+```bash
+git reset --soft HEAD~1
+```
+
+* Moves the repository (`HEAD`) to the previous commit.
+* Keeps all changes in the **staging area**.
+* Working directory remains unchanged.
+
+---
+
+## Mixed Reset (Default)
+
+```bash
+git reset --mixed HEAD~1
+```
+
+or
+
+```bash
+git reset HEAD~1
+```
+
+* Moves the repository (`HEAD`) to the previous commit.
+* Unstages the changes.
+* Keeps the changes in the working directory.
+
+---
+
+## Hard Reset
+
+```bash
+git reset --hard HEAD~1
+```
+
+* Moves the repository (`HEAD`) to the previous commit.
+* Clears the staging area.
+* Removes all changes from the working directory.
+
+> **Warning:** `git reset --hard` permanently deletes uncommitted changes.
+
+---
+
+# Difference Between Reset Types
+
+| Command             | Repository (HEAD) | Staging Area | Working Directory |
+| ------------------- | ----------------- | ------------ | ----------------- |
+| `git reset --soft`  | Reset             | Kept         | Kept              |
+| `git reset --mixed` | Reset             | Cleared      | Kept              |
+| `git reset --hard`  | Reset             | Cleared      | Cleared           |
+
+---
+
+# 6. `git revert`
+
+`git revert` creates a new commit that reverses the changes introduced by an existing commit.
+
+Syntax:
+
+```bash
+git revert <commit-id>
+```
+
+Example:
+
+```bash
+git revert 8f4c2d1
+```
+
+This does **not** delete the original commit. Instead, Git creates a new commit that undoes its changes.
+
+Example:
+
+Before:
+
+```text
+A ---- B ---- C (HEAD)
+```
+
+After:
+
+```text
+A ---- B ---- C ---- D (HEAD)
+```
+
+* `C` = Original commit
+* `D` = Revert commit that undoes the changes made in `C`
+
+`git revert` is the preferred way to undo changes that have already been pushed to a shared repository because it preserves the commit history.
