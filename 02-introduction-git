@@ -201,3 +201,558 @@ A ---- B ---- C ---- D (HEAD)
 * `D` = Revert commit that undoes the changes made in `C`
 
 `git revert` is the preferred way to undo changes that have already been pushed to a shared repository because it preserves the commit history.
+
+
+# Git Class Notes
+
+# 1. Git Stash
+
+## What is Git Stash?
+
+`git stash` is used to temporarily save **uncommitted changes** and clean the working directory without creating a commit.
+
+### Save current changes
+
+```bash
+git stash
+```
+
+**Use Case**
+
+* You are working on some files.
+* Suddenly, you need to switch to another branch.
+* Instead of committing incomplete work, use `git stash`.
+
+After executing:
+
+```bash
+git stash
+```
+
+* Changes are saved as a backup.
+* Working directory becomes clean.
+
+---
+
+### View saved stashes
+
+```bash
+git stash list
+```
+
+Example:
+
+```text
+stash@{0}: WIP on main
+stash@{1}: WIP on feature
+```
+
+---
+
+### Apply a stash
+
+```bash
+git stash apply stash@{0}
+```
+
+Restores the saved changes.
+
+> **Note:** Prefer to have a clean working directory before applying a stash to avoid conflicts.
+
+---
+
+### Delete all stashes
+
+```bash
+git stash clear
+```
+
+Deletes all saved stash entries.
+
+---
+
+# 2. Git Cherry-pick
+
+## What is Cherry-pick?
+
+`git cherry-pick` copies **a specific commit** from one branch to another.
+
+Syntax
+
+```bash
+git cherry-pick <commit-id>
+```
+
+Example
+
+```bash
+git cherry-pick 8f4c2d1
+```
+
+**Note**
+
+* Cherry-pick works only with **committed changes**.
+* It cannot copy uncommitted files.
+
+---
+
+# 3. Undo Working Directory Changes
+
+Restore a modified file to the last committed version.
+
+```bash
+git restore <file-name>
+```
+
+Example
+
+```bash
+git restore file1
+```
+
+---
+
+# 4. View Commit History
+
+Display the last two commits.
+
+```bash
+git log --oneline -2
+```
+
+Example
+
+```text
+8f4c2d1 Fix login bug
+3a2b1c4 Added login page
+```
+
+`HEAD` always points to the latest commit of the current branch.
+
+---
+
+# 5. Git Reset
+
+## Soft Reset
+
+```bash
+git reset --soft HEAD~1
+```
+
+Moves the branch pointer (`HEAD`) back one commit.
+
+* Repository (HEAD) → Reset
+* Staging Area → Kept
+* Working Directory → Kept
+
+**Use Case**
+
+Undo the last commit but keep all changes staged so that you can recommit them.
+
+---
+
+## Mixed Reset (Default)
+
+```bash
+git reset --mixed HEAD~1
+```
+
+or
+
+```bash
+git reset HEAD~1
+```
+
+* Repository (HEAD) → Reset
+* Staging Area → Cleared
+* Working Directory → Kept
+
+**Use Case**
+
+Undo the commit and keep the changes for further editing.
+
+---
+
+## Hard Reset
+
+```bash
+git reset --hard HEAD~1
+```
+
+* Repository (HEAD) → Reset
+* Staging Area → Cleared
+* Working Directory → Cleared
+
+⚠ **Warning:** This permanently deletes uncommitted changes.
+
+---
+
+# Reset Comparison
+
+| Command             | Repository | Staging Area | Working Directory |
+| ------------------- | ---------- | ------------ | ----------------- |
+| `git reset --soft`  | Reset      | Kept         | Kept              |
+| `git reset --mixed` | Reset      | Cleared      | Kept              |
+| `git reset --hard`  | Reset      | Cleared      | Cleared           |
+
+---
+
+# 6. Git Revert
+
+Undo a commit without removing it from history.
+
+```bash
+git revert <commit-id>
+```
+
+Example
+
+```bash
+git revert 8f4c2d1
+```
+
+Git creates a new commit that reverses the selected commit.
+
+---
+
+# 7. Git Tags
+
+## What is a Tag?
+
+Tags are used to mark important commits such as:
+
+* Release versions
+* QA builds
+* Production deployments
+
+---
+
+## Create an annotated tag
+
+```bash
+git tag -a <tag-name> -m "Release comment" <commit-id>
+```
+
+Example
+
+```bash
+git tag -a v1.0 -m "Production Release" 8f4c2d1
+```
+
+---
+
+## Display all tags
+
+```bash
+git tag
+```
+
+---
+
+## Show tag details
+
+```bash
+git show <tag-name>
+```
+
+Example
+
+```bash
+git show v1.0
+```
+
+---
+
+## Push tags
+
+```bash
+git push --tags
+```
+
+---
+
+## Delete a local tag
+
+```bash
+git tag -d <tag-name>
+```
+
+Example
+
+```bash
+git tag -d v1.0
+```
+
+> Multiple tags can point to the same commit.
+
+---
+
+# 8. Git Fetch
+
+## What is Git Fetch?
+
+`git fetch` downloads the latest changes from the remote repository.
+
+It **does not**
+
+* Merge changes
+* Modify your current branch
+* Change your working directory
+
+Example
+
+```bash
+git fetch
+```
+
+Review downloaded commits
+
+```bash
+git log HEAD..origin/main --oneline
+```
+
+Merge them later
+
+```bash
+git merge origin/main
+```
+
+---
+
+# Git Pull
+
+```bash
+git pull
+```
+
+Equivalent to
+
+```bash
+git fetch
+git merge
+```
+
+---
+
+# Fetch vs Pull
+
+| Fetch                        | Pull                         |
+| ---------------------------- | ---------------------------- |
+| Downloads changes            | Downloads and merges changes |
+| No working directory changes | Updates working directory    |
+| Safe for reviewing           | Immediate update             |
+
+---
+
+# 9. Merge vs Rebase
+
+## Merge
+
+Creates a merge commit.
+
+History is preserved.
+
+```text
+A---B---C
+     \
+      D---E
+           \
+            M
+```
+
+---
+
+## Rebase
+
+Moves your commits onto another branch.
+
+History becomes linear.
+
+```text
+Before
+
+A---B---C
+     \
+      D---E
+
+After Rebase
+
+A---B---C---D'---E'
+```
+
+Example
+
+```bash
+git checkout test
+git rebase master
+```
+
+**Advantages**
+
+* Cleaner history
+* Linear commit graph
+
+**Note**
+
+Avoid rebasing shared branches that other developers are using because it rewrites commit history.
+
+---
+
+# 10. Git Remote
+
+View remotes
+
+```bash
+git remote -v
+```
+
+Example
+
+```text
+origin https://github.com/user/project.git (fetch)
+origin https://github.com/user/project.git (push)
+```
+
+`origin` is simply the default name (alias) of the remote repository.
+
+---
+
+## Add a remote
+
+```bash
+git remote add demo <repository-url>
+```
+
+---
+
+## Remove a remote
+
+```bash
+git remote remove demo
+```
+
+Example
+
+```bash
+git remote remove origin
+```
+
+---
+
+## Add origin again
+
+```bash
+git remote add origin <repository-url>
+```
+
+---
+
+# 11. Push and Pull
+
+Pull
+
+```bash
+git pull origin main
+```
+
+Push
+
+```bash
+git push origin main
+```
+
+---
+
+# 12. Bare Repository vs Non-Bare Repository
+
+## Bare Repository
+
+* Used as a central repository.
+* Stores only Git history.
+* No working directory.
+* Example: GitHub, GitLab, Bitbucket repositories.
+
+## Non-Bare Repository
+
+* Used by developers.
+* Contains both the Git history and working directory.
+* You can modify files, commit changes, and push updates.
+
+---
+
+# 13. .gitignore
+
+`.gitignore` tells Git which files or folders should not be tracked.
+
+Example
+
+```text
+*.log
+target/
+node_modules/
+```
+
+---
+
+# 14. Git Clean
+
+Preview untracked files that would be removed
+
+```bash
+git clean -n
+```
+
+Delete untracked files
+
+```bash
+git clean -f
+```
+
+---
+
+# 15. Feature Branching Strategy
+
+A common Git workflow:
+
+1. Create a feature branch from `main`.
+2. Develop the feature.
+3. Commit changes regularly.
+4. Push the feature branch.
+5. Create a Pull Request (PR).
+6. Review the code.
+7. Merge into `main`.
+8. Delete the feature branch.
+
+Example
+
+```bash
+git checkout -b feature/login
+git add .
+git commit -m "Implemented login feature"
+git push origin feature/login
+```
+
+---
+
+# Important Git Commands Summary
+
+| Command             | Purpose                                |
+| ------------------- | -------------------------------------- |
+| `git stash`         | Save uncommitted work temporarily      |
+| `git stash list`    | View saved stashes                     |
+| `git stash apply`   | Restore a stash                        |
+| `git cherry-pick`   | Copy a specific commit                 |
+| `git restore`       | Undo working directory changes         |
+| `git reset --soft`  | Undo commit, keep changes staged       |
+| `git reset --mixed` | Undo commit, unstage changes           |
+| `git reset --hard`  | Undo commit and delete changes         |
+| `git revert`        | Undo a commit by creating a new commit |
+| `git tag`           | Create and manage release tags         |
+| `git fetch`         | Download remote changes only           |
+| `git pull`          | Fetch and merge remote changes         |
+| `git merge`         | Merge one branch into another          |
+| `git rebase`        | Reapply commits on another base        |
+| `git remote -v`     | List remote repositories               |
+| `git push`          | Upload commits to remote               |
+| `git clean -n`      | Preview untracked files for deletion   |
+| `git clean -f`      | Delete untracked files                 |
