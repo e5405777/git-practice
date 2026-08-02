@@ -1,0 +1,64 @@
+Git Basics
+
+1. What is Git?
+2. Why do we use Git?
+3. Git vs GitHub.
+4. Git vs GitLab vs Bitbucket.
+5. What is a Repository?
+6. What is a Commit?
+7. What is a Branch?
+8. What is HEAD in Git?
+9. What is the Git Working Tree?
+10. What are the Git stages (Working Directory, Staging Area, Local Repository)?
+
+Branching & Merging
+
+11. What is Git Branching?
+12. Git Merge vs Git Rebase.
+13. Fast Forward Merge vs Three-Way Merge.
+14. What is Cherry Pick?
+15. What is Squash Merge?
+16. What is Git Stash?
+17. When do you use Git Stash?
+18. What is Git Tag?
+19. Lightweight Tag vs Annotated Tag.
+20. What is Detached HEAD?
+
+Collaboration
+
+21. What is Pull Request (PR)?
+22. What is Code Review?
+23. How do you resolve Merge Conflicts?
+24. Git Fetch vs Git Pull.
+25. Git Pull vs Git Clone.
+26. Git Reset vs Git Revert.
+27. Soft Reset vs Mixed Reset vs Hard Reset.
+28. What is Git Remote?
+29. Origin vs Upstream.
+30. What is Forking?
+
+Advanced Git
+
+31. What is Git Rebase?
+32. Interactive Rebase.
+33. How do you remove a commit from history?
+34. How do you recover a deleted commit?
+35. What is Git Reflog?
+36. What is Git Bisect?
+37. What is Git Hooks?
+38. What is Git Submodule?
+39. What is Git LFS?
+40. How do you manage large repositories?
+
+Real-Time Scenarios
+
+41. You accidentally committed secrets/API keys. What will you do?
+42. Your deployment branch is broken after a merge. How do you recover?
+43. How do you resolve multiple developers editing the same file?
+44. What branching strategy does your team follow (Git Flow, GitHub Flow, Trunk-Based)?
+45. How do you handle hotfixes in Production?
+46. Explain your Git workflow from feature development to Production.
+47. How do you rollback a bad deployment using Git?
+48. How do you ensure clean commit history?
+49. Common Git mistakes developers make.
+50. Explain a real Git conflict you resolved in your project.
