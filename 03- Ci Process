@@ -369,3 +369,28 @@ GitLab Repository
  JAR / WAR (Deliverables)
 
 This is a typical build stage in a CI/CD pipeline before the a
+
+###############
+
+Unit Testing – The first level of testing performed by the developer on their local machine. It verifies that individual functions, methods, or components work correctly.
+Integration Testing – Verifies that the newly added functionality integrates correctly with the existing modules. This testing is typically performed through automated tests in the CI/CD pipeline.
+System Testing – Performed by the QA team on the feature branch or a test environment. It validates the complete application to ensure the new feature works as expected and meets the specified requirements.
+Regression Testing – Ensures that the newly implemented functionality has not broken any existing features. QA performs a quick or comprehensive round of testing on previously working functionalities.
+User Acceptance Testing (UAT) – The final phase of testing, where end users or business stakeholders validate that the application meets business requirements before it is approved for production. It is sometimes referred to as Beta Testing when conducted by a limited group of end users.
+Testing Flow
+Developer
+   │
+   ├── Unit Testing (Local Machine)
+   │
+CI/CD Pipeline
+   │
+   ├── Integration Testing (Automated)
+   │
+QA Team
+   │
+   ├── System Testing
+   ├── Regression Testing
+   │
+Business Users / End Users
+   │
+   └── User Acceptance Testing (UAT)
