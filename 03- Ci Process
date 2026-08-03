@@ -1,1 +1,332 @@
 
+Developer Build Workflow (GitHub/GitLab) – Detailed Class Notes
+
+The image illustrates the Developer Build Process. This process is followed by developers to build, test, and upload code to a Git repository (GitHub or GitLab) before it enters the CI/CD pipeline.
+
+What is a Developer Build?
+
+A Developer Build is the process performed in a developer's local machine (Developer Workspace) where source code is compiled, tested, packaged, and then pushed to a version control system like GitHub or GitLab.
+
+The main objective is to ensure the code is working correctly before it is shared with the team.
+
+Developer Build Workflow
+GitHub/GitLab Repository
+        │
+        │ Clone
+        ▼
+Developer Workspace
+        │
+        ▼
+Source Code
+        │
+        ▼
+Compilation
+        │
+        ▼
+Object Files
+        │
+        ▼
+Packaging
+        │
+        ▼
+Artifact (.jar/.war)
+        │
+        ▼
+Unit Testing
+        │
+        ▼
+Git Commit
+        │
+        ▼
+Git Push
+        │
+        ▼
+GitHub/GitLab Repository
+Step 1: Clone the Repository
+What is Clone?
+
+Clone means creating a complete copy of the remote Git repository on your local computer.
+
+The cloned repository contains:
+
+Source code
+Branches
+Commit history
+Configuration files
+Command
+git clone https://github.com/username/project.git
+Example
+
+Suppose the project is stored in GitHub.
+
+GitHub Repository
+
+Inventory-App
+
+Developer clones it:
+
+git clone https://github.com/company/inventory-app.git
+
+Now the entire project is available locally.
+
+Why Clone?
+Start development
+Get the latest project
+Work independently
+Make changes locally
+Step 2: Source Code
+
+After cloning, the developer starts writing or modifying code.
+
+Example Java project:
+
+Inventory-App
+
+src
+ ├── main
+ │    ├── java
+ │    └── resources
+ │
+ └── test
+      └── java
+
+Common source code files:
+
+Main.java
+User.java
+Product.java
+OrderService.java
+application.properties
+pom.xml
+Developer Activities
+Add new features
+Fix bugs
+Improve performance
+Update configuration
+Step 3: Compilation
+What is Compilation?
+
+Compilation is the process of converting human-readable source code into machine-readable bytecode or object files.
+
+Java source:
+
+Main.java
+
+After compilation:
+
+Main.class
+
+The Java compiler (javac) performs:
+
+Syntax checking
+Error detection
+Bytecode generation
+Maven Command
+mvn compile
+Gradle Command
+gradle build
+Output
+target/classes/
+
+Example:
+
+target/classes
+
+Main.class
+User.class
+Order.class
+Step 4: Object Files
+
+Object files are the compiled versions of source code.
+
+For Java:
+
+.class files
+
+Example:
+
+User.class
+
+Product.class
+
+Order.class
+Purpose
+Ready for packaging
+Faster execution
+Machine understandable
+Step 5: Packaging
+What is Packaging?
+
+Packaging combines all compiled files and dependencies into a deployable file.
+
+Common package types:
+
+JAR
+WAR
+EAR
+Maven Command
+mvn package
+
+Output:
+
+target/
+
+inventory.jar
+
+or
+
+inventory.war
+Why Packaging?
+
+Instead of sending hundreds of class files,
+
+User.class
+
+Product.class
+
+Order.class
+
+everything is bundled into one file:
+
+inventory.jar
+
+This is easier to deploy and distribute.
+
+Step 6: Artifact
+What is an Artifact?
+
+An Artifact is the final output of the build process.
+
+Examples:
+
+JAR
+WAR
+ZIP
+Docker Image
+
+Example:
+
+inventory.jar
+
+Artifacts are stored in repositories like:
+
+Nexus Repository
+JFrog Artifactory
+GitHub Packages
+
+Later they are deployed to:
+
+Development
+Testing
+Staging
+Production
+Step 7: Unit Testing
+What is Unit Testing?
+
+Unit testing verifies that individual methods or classes work correctly.
+
+Tests are written before or after development.
+
+Example:
+
+Calculator
+
+add()
+
+subtract()
+
+multiply()
+
+Unit tests verify:
+
+add(5,3)=8
+
+subtract(5,3)=2
+
+multiply(5,3)=15
+Maven Command
+mvn test
+Benefits
+Detect bugs early
+Improve code quality
+Reduce production failures
+Enable safe code changes
+
+Common Java testing frameworks:
+
+JUnit
+TestNG
+Mockito
+Step 8: Git Commit
+
+After successful testing, save the changes locally.
+
+git add .
+
+Stages all modified files.
+
+Commit the changes:
+
+git commit -m "Added login feature"
+
+A commit creates a snapshot of the current code with a descriptive message.
+
+Step 9: Push to GitHub/GitLab
+
+Finally, upload the committed changes to the remote repository.
+
+git push origin main
+
+Now the updated code is available to other developers and can trigger CI/CD pipelines.
+
+Common Git Commands
+Command	Purpose
+git clone <url>	Download repository
+git status	Check file status
+git add .	Stage changes
+git commit -m "message"	Save changes locally
+git push origin main	Upload changes
+git pull origin main	Download latest changes
+git branch	List branches
+git checkout <branch>	Switch branch
+Common Maven Commands
+Command	Purpose
+mvn clean	Remove previous build files
+mvn compile	Compile source code
+mvn test	Run unit tests
+mvn package	Create JAR/WAR
+mvn install	Install artifact into the local Maven repository (~/.m2/repository)
+mvn deploy	Upload artifact to a remote repository (e.g., Nexus or Artifactory)
+Real-Time Example
+
+Suppose you are developing an Employee Management System.
+
+Clone the repository:
+
+git clone https://github.com/company/employee-management.git
+Add a new feature, such as employee search.
+
+Compile the code:
+
+mvn compile
+
+Package the application:
+
+mvn package
+
+This generates:
+
+employee-management.jar
+
+Run tests:
+
+mvn test
+
+Commit your changes:
+
+git add .
+git commit -m "Added employee search feature"
+
+Push to GitHub:
+
+git push origin feature/employee-search
