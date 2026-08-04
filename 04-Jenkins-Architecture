@@ -1,0 +1,72 @@
+                        Developer
+                            │
+                     git push / commit
+                            │
+                            ▼
+                     GitHub / GitLab
+                            │
+                      Webhook Trigger
+                            │
+                            ▼
+                   +-------------------+
+                   |  Jenkins          |
+                   |  Controller       |
+                   |  (Master)         |
+                   |-------------------|
+                   | • UI              |
+                   | • Pipelines       |
+                   | • Plugins         |
+                   | • Scheduler       |
+                   | • Job Management  |
+                   +-------------------+
+                      │      │      │
+          SSH/JNLP    │      │      │
+                      ▼      ▼      ▼
+              +------------+ +------------+ +------------+
+              | Linux Agent| |WindowsAgent| | Docker/K8s |
+              | Ubuntu     | | .NET Build | | Agent      |
+              +------------+ +------------+ +------------+
+                    │              │               │
+                    ▼              ▼               ▼
+              Build/Test     Build/Test     Build/Test
+                    │              │               │
+                    └──────────────┼───────────────┘
+                                   │
+                                   ▼
+                          Docker Image Build
+                                   │
+                                   ▼
+                         Push to Docker Hub/ECR
+                                   │
+                                   ▼
+                        Deploy to Kubernetes/EKS
+                                   │
+                                   ▼
+                          Application Running
+
+######################################################
+
+                  +-------------------------------+
+                  |        AWS Cloud              |
+                  |                               |
+                  |  +------------------------+   |
+                  |  | EC2 Instance           |   |
+                  |  | Jenkins Controller     |   |
+                  |  +------------------------+   |
+                  |        │    │    │            |
+                  |        │SSH │SSH │SSH         |
+                  |        ▼    ▼    ▼            |
+                  | +--------+ +--------+ +-----+ |
+                  | |Agent-1 | |Agent-2 | |Agent3|
+                  | |Ubuntu  | |Ubuntu  | |K8s   |
+                  | +--------+ +--------+ +-----+ |
+                  +-------------------------------+
+                          │
+                          ▼
+                     Amazon ECR
+                          │
+                          ▼
+                     Amazon EKS
+                          │
+                          ▼
+                  Production Application
