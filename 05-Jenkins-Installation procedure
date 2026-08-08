@@ -1,0 +1,185 @@
+JENKINS INSTALLATION NOTES
+Ubuntu and RHEL
+
+1. PREREQUISITES
+- Ubuntu Server or RHEL Server
+- sudo/root access
+- Internet connectivity
+- Java 21
+- Jenkins uses port 8080
+
+Check OS:
+  cat /etc/os-release
+
+Check IP:
+  hostname -I
+
+
+2. UBUNTU INSTALLATION
+
+Step 1: Update packages
+  sudo apt update
+  sudo apt upgrade -y
+
+Step 2: Install Java
+  sudo apt install fontconfig openjdk-21-jre -y
+  java -version
+
+Step 3: Add Jenkins repository
+  sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc   https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+
+  echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+  sudo apt update
+
+Step 4: Install Jenkins
+  sudo apt install jenkins -y
+
+Step 5: Start and enable Jenkins
+  sudo systemctl enable --now jenkins
+
+Step 6: Check status
+  sudo systemctl status jenkins
+
+Step 7: Configure firewall (if UFW is enabled)
+  sudo ufw allow 8080/tcp
+  sudo ufw status
+
+Step 8: Get initial password
+  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+Step 9: Open Jenkins
+  http://SERVER_IP:8080
+
+
+3. RHEL INSTALLATION
+
+Step 1: Update packages
+  sudo dnf update -y
+
+Step 2: Install Java
+  sudo dnf install java-21-openjdk -y
+  java -version
+
+Step 3: Add Jenkins repository
+  sudo wget -O /etc/yum.repos.d/jenkins.repo   https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2026.key
+
+  sudo dnf clean all
+  sudo dnf makecache
+
+Step 4: Install Jenkins
+  sudo dnf install jenkins -y
+
+Step 5: Start and enable Jenkins
+  sudo systemctl enable --now jenkins
+
+Step 6: Check status
+  sudo systemctl status jenkins
+
+Step 7: Configure firewalld
+  sudo firewall-cmd --permanent --add-port=8080/tcp
+  sudo firewall-cmd --reload
+  sudo firewall-cmd --list-ports
+
+Step 8: Get initial password
+  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+Step 9: Open Jenkins
+  http://SERVER_IP:8080
+
+
+4. JENKINS INITIAL SETUP
+
+1. Open http://SERVER_IP:8080
+2. Enter the initial administrator password.
+3. Select "Install suggested plugins".
+4. Create the first administrator user.
+5. Configure the Jenkins URL.
+6. Open the Jenkins Dashboard.
+
+
+5. COMMON JENKINS COMMANDS
+
+Start:
+  sudo systemctl start jenkins
+
+Stop:
+  sudo systemctl stop jenkins
+
+Restart:
+  sudo systemctl restart jenkins
+
+Status:
+  sudo systemctl status jenkins
+
+Enable at boot:
+  sudo systemctl enable jenkins
+
+View logs:
+  sudo journalctl -u jenkins -f
+
+Check port:
+  sudo ss -lntp | grep 8080
+
+
+6. IMPORTANT JENKINS LOCATIONS
+
+Jenkins home:
+  /var/lib/jenkins
+
+Jobs:
+  /var/lib/jenkins/jobs
+
+Plugins:
+  /var/lib/jenkins/plugins
+
+Initial password:
+  /var/lib/jenkins/secrets/initialAdminPassword
+
+Default port:
+  8080
+
+
+7. UBUNTU VS RHEL QUICK REFERENCE
+
+Ubuntu:
+  Package manager: apt
+  Package query: dpkg
+  Firewall: ufw
+
+RHEL:
+  Package manager: dnf
+  Package query: rpm
+  Firewall: firewalld
+
+Both:
+  Service manager: systemd
+  Jenkins service: jenkins
+  Jenkins port: 8080
+  Jenkins home: /var/lib/jenkins
+
+
+8. BASIC TROUBLESHOOTING
+
+Check Jenkins status:
+  sudo systemctl status jenkins
+
+Check logs:
+  sudo journalctl -u jenkins -xe
+
+Check Java:
+  java -version
+
+Check port:
+  sudo ss -lntp | grep 8080
+
+Test locally:
+  curl http://localhost:8080
+
+Check Ubuntu firewall:
+  sudo ufw status
+
+Check RHEL firewall:
+  sudo firewall-cmd --list-ports
