@@ -183,3 +183,79 @@ Check Ubuntu firewall:
 
 Check RHEL firewall:
   sudo firewall-cmd --list-ports
+
+###################
+
+TO setup java Environmnet variable 
+
+enkins Configuration — Java 21
+
+Jenkins URL:
+http://3.233.229.226:8080/
+
+1. Add Java Environment Variable
+
+Go to:
+Manage Jenkins → System → Global properties → Environment variables
+
+Add a new environment variable:
+
+Name:
+JAVA_HOME
+
+Value:
+/usr/lib/jvm/java-21-openjdk-amd64
+
+Make sure "Environment variables" is enabled.
+
+
+2. Configure JDK Installation
+
+Go to:
+Manage Jenkins → Tools → JDK installations
+
+Add a JDK installation.
+
+Name:
+JAVA_HOME
+
+Installation path:
+/usr/lib/jvm/java-21-openjdk-amd64
+
+
+3. Verify the Java Installation
+
+Run the following commands on the Jenkins server:
+
+readlink -f "$(which javac)"
+
+Expected output:
+/usr/lib/jvm/java-21-openjdk-amd64/bin/javac
+
+
+Then run:
+
+dirname "$(dirname "$(readlink -f "$(which javac)")")"
+
+Expected output:
+/usr/lib/jvm/java-21-openjdk-amd64
+
+
+You can also verify the directory with:
+
+ls -la /usr/lib/jvm/java-21-openjdk-amd64
+
+
+Finally, verify Java itself:
+
+java -version
+javac -version
+
+
+Final Configuration:
+
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+
+
+Important:
+In Jenkins, use JAVA_HOME (not JAVA Home or JAVA_Home) as the environment variable/JDK name.
