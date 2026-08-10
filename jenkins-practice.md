@@ -144,6 +144,20 @@ What ever input getting from first job passing to second job
 once this one tested we can select build on same node 
 
 
+#########Maven installation steps ##########
+
+cd /usr/local
+
+sudo wget https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz
+
+sudo tar -xvzf apache-maven-3.9.11-bin.tar.gz
+
+sudo ln -s apache-maven-3.9.11 maven
+
+export M2_HOME=/usr/local/maven
+export PATH=${M2_HOME}/bin:${PATH}
+
+<img width="859" height="359" alt="image" src="https://github.com/user-attachments/assets/a6221ab7-e400-42f9-9efc-86a19aa33165" />
 
  
 
