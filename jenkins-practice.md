@@ -159,6 +159,12 @@ export PATH=${M2_HOME}/bin:${PATH}
 
 <img width="859" height="359" alt="image" src="https://github.com/user-attachments/assets/a6221ab7-e400-42f9-9efc-86a19aa33165" />
 
+####### Create another job and jut run 
+
+# mvn --version
+
+<img width="746" height="350" alt="image" src="https://github.com/user-attachments/assets/cb553d28-3195-48b7-8010-409756a12121" />
+
  
 
 
