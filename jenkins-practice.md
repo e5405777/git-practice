@@ -118,6 +118,11 @@ ENTER YOUR NAME
 
 now in the down stream we need to pass the default value but we need install pulgin parametrized trigger
 
+<img width="938" height="496" alt="image" src="https://github.com/user-attachments/assets/cf2f8079-5338-4262-bc08-8fab7f03edc8" />
+<img width="713" height="406" alt="image" src="https://github.com/user-attachments/assets/e8c0f19d-026a-4f4d-902e-ed79d33e65ad" />
+
+
+
 <img width="740" height="320" alt="image" src="https://github.com/user-attachments/assets/de9a2e14-307c-4e0e-9243-4d3afe1a5627" />
 
 now still taking the default value
