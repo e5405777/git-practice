@@ -131,6 +131,9 @@ now we need to pass the parameter for the second job
 
 current build parameters means what ever first job getting it passing to second job
 
+Add the parameter 
+FIRSTNAME=pavan-$(FIRSTNAME)
+
 <img width="791" height="294" alt="image" src="https://github.com/user-attachments/assets/603391de-a0a1-4a68-95e1-d2d5343ed804" />
 
 
